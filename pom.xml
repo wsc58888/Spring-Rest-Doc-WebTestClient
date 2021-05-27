@@ -113,7 +113,7 @@
 							<goal>process-asciidoc</goal>
 						</goals>
 						<configuration>
-							<sourceDocumentName>api-user-service.adoc</sourceDocumentName>
+							<sourceDocumentName>api-group-service.adoc</sourceDocumentName>
 							<backend>html</backend>
 							<doctype>book</doctype>
 							<outputDirectory>${basedir}/src/main/webapp</outputDirectory>

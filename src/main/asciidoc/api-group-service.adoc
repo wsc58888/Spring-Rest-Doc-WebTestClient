@@ -1,4 +1,4 @@
-= 用户 API 文档 
+= 团购 API 文档 
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -82,11 +82,11 @@ HTTP状态码描述
 |===
 
 
-[[api-user-service]]
-== 用户API
+[[api-group-service]]
+== 团购API
 
-[[resources-user-service-login]]
-=== 用户登录
-operation::user-service-login[snippets='curl-request,request-fields,http-response,response-fields']
+[[resources-group-service-timeout]]
+=== 变更已到期的活动(定时任务执行: scrm_quartz) 
+operation::group-service-timeout[snippets='curl-request,http-response']
 
 

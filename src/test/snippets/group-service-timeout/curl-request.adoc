@@ -1,0 +1,4 @@
+[source,bash]
+----
+$ curl 'http://127.0.0.1:81/activity-group/timeout' -i -X GET
+----

@@ -1,0 +1,13 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Access-Control-Allow-Credentials: true
+Access-Control-Expose-Headers: X-forwared-port, X-forwarded-host
+Vary: Origin,Access-Control-Request-Method,Access-Control-Request-Headers
+Date: Thu, 27 May 2021 11:18:39 GMT
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Content-Length: 53
+
+{"code":200,"status":"OK","msg":"成功","body":null}
+----
