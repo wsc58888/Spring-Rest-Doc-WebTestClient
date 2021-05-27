@@ -1,0 +1,11 @@
+[source,http,options="nowrap"]
+----
+POST /user-service/sysUser/login HTTP/1.1
+Content-Type: application/json
+Content-Length: 49
+Host: 127.0.0.1:81
+
+{"userId":"wangsencai",
+ "password":"WSCwsc123"
+}
+----

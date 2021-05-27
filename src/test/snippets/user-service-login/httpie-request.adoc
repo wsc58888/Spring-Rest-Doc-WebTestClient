@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ echo '{"userId":"wangsencai",
+ "password":"WSCwsc123"
+}' | http POST 'http://127.0.0.1:81/user-service/sysUser/login' \
+    'Content-Type:application/json'
+----

@@ -1,0 +1,5 @@
+server:
+  port: 13241
+spring:
+  application:
+    name: scrm-test-service

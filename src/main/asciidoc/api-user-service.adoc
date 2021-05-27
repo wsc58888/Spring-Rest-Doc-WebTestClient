@@ -1,0 +1,92 @@
+= 用户 API 文档 
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:operation-curl-request-title: 请求示例
+:operation-http-response-title: 返回示例
+:operation-request-fields-title: 请求参数
+:operation-request-parameters-title: 请求参数
+:operation-path-parameters-title: 路径参数
+:operation-response-fields-title: 返回域
+
+
+[[overview]]
+= Overview
+V1.0 API DOC
+
+[[overview-api-uri]]
+== API Base URI
+联调开发，需要将本地环境URI更新下述环境的URI
+|===
+| 环境 | API URI |协议
+| `开发测试`
+| 127.0.0.1:81
+| http
+| `测试验收`
+| http://183.63.181.84:90/
+| http
+| `生产环境`
+| https://wechat.lirimall.com:9443/
+| http
+|===
+
+[[overview-http-method]]
+== Http Https 请求
+基于标准的restful方式
+|===
+| METHOD | DES
+| `GET`
+| Used to retrieve a resource
+| `POST`
+| Used to create a new resource
+| `PUT`
+| Used to update an existing resource
+| `DELETE`
+| Used to delete an existing resource
+|===
+
+[[overview-http-status]]
+== Http Https状态
+HTTP状态码描述
+|===
+| STATUS | DES
+| `200 OK`
+| The request completed successfully
+| `201 Created`
+| A new resource has been created successfully.
+`Location` header
+| `204 No Content`
+| An update to an existing resource has been applied successfully
+| `400 Bad Request`
+| The request was malformed. 
+| `401 Unauthorized`
+| The token is invalid. 
+| `404 Not Found`
+| The requested resource did not exist
+| `502 Bad Gateway`
+| The server error
+|===
+
+[[overview-result-status]]
+== 返回状态码
+返回状态码描述
+|===
+| CODE | MSG
+| 1  | success
+| 0  | 业务异常信息
+| -1 | 认证异常
+| -2 | 系统错误
+|===
+
+
+[[api-user-service]]
+== 客户端APP版本API
+
+[[resources-ususer-service-login]]
+=== 用户登录
+operation::user-service-login[snippets='curl-request,request-fields,http-response,response-fields']
+
+

@@ -1,0 +1,8 @@
+[source,bash]
+----
+$ curl 'http://127.0.0.1:81/user-service/sysUser/login' -i -X POST \
+    -H 'Content-Type: application/json' \
+    -d '{"userId":"wangsencai",
+ "password":"WSCwsc123"
+}'
+----

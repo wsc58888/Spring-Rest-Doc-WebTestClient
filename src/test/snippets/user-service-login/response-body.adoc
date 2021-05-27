@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"code":200,"status":"OK","msg":"成功","body":{"user":{"id":183,"userId":"wangsencai","name":"超级管理员","mobile":"15820268458","createTime":"2021-05-25 17:23:29","updateTime":"2021-05-25 17:23:29","remark":null,"roleName":null,"storeId":null,"storeName":null,"lastLoginTime":"2021-05-25T09:23:29.000+0000","userRoleVos":[{"roleId":43,"roleName":"测试角色","type":0,"menuList":[{"id":105,"name":"测试菜单","orderNum":2,"parentId":null,"icon":"codeConsole","url":"/test","createTime":"2021-04-30 17:12:39","status":1,"children":[]}]}],"storeVos":null,"deptId":1,"deptName":"丽日购","status":null},"token":"c77e1650-8ba3-4ce8-be63-4c1a2eb3e480"}}
+----
