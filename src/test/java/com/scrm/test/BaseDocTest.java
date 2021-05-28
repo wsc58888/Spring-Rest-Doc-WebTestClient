@@ -1,11 +1,11 @@
 package com.scrm.test;
 
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.client.reactive.ClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration;
+
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -23,9 +25,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import reactor.netty.http.client.HttpClient;
+import reactor.netty.resources.ConnectionProvider;
+import reactor.netty.resources.LoopResources;
+import reactor.netty.tcp.TcpClient;
 
 public class BaseDocTest {
 	@Rule
@@ -46,7 +52,7 @@ public class BaseDocTest {
 	protected String contextPath = "user-service";
 	protected String token = "d28973a9-2b2d-4908-a633-48c37080b3f6";
 
-	protected FieldDescriptor[] dataField = new FieldDescriptor[] { };
+	protected FieldDescriptor[] dataField = new FieldDescriptor[] {};
 	protected FieldDescriptor[] respField = new FieldDescriptor[] {};
 
 	protected FieldDescriptor[] pageFields = new FieldDescriptor[] {};
@@ -54,11 +60,18 @@ public class BaseDocTest {
 	@Before
 	public void setUp() {
 
-		HttpClient httpClient = HttpClient.create()
-				.tcpConfiguration(client -> client.doOnConnected(
-						conn -> conn.addHandlerLast(new ReadTimeoutHandler(10000))// 客户端获取读到信息的时间
-						.addHandlerLast(new WriteTimeoutHandler(10000))));// 远程将信息写入客户端完成的时间
-		ClientHttpConnector httpConnector = new ReactorClientHttpConnector(httpClient);
+		final ConnectionProvider theTcpClientPool = ConnectionProvider.elastic("tcp-client-pool");
+		final LoopResources theTcpClientLoopResources = LoopResources.create("tcp-client-loop");
+
+		final TcpClient theTcpClient = TcpClient
+		    .create(theTcpClientPool)
+		    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 50000)// 用来设置连接超时时长,单位是毫秒
+		    .runOn(theTcpClientLoopResources)
+		    .doOnConnected(theConnection -> {
+		        theConnection.addHandlerLast(new ReadTimeoutHandler(10000, TimeUnit.MILLISECONDS));// 客户端获取读到信息的时间
+		        theConnection.addHandlerLast(new WriteTimeoutHandler(10000, TimeUnit.MILLISECONDS));// 远程将信息写入客户端完成的时间
+		    });
+		ClientHttpConnector httpConnector = new ReactorClientHttpConnector(HttpClient.from(theTcpClient));
 
 		this.webTestClient = WebTestClient.bindToServer(httpConnector)
 				.filter(documentationConfiguration(restDocumentation)).baseUrl(webBaseUrl).build();
